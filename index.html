@@ -56,38 +56,42 @@
     <!-- Insert the images here -->
   </div>
   
-   <script src="https://apis.google.com/js/api.js"></script>
-  
   <!-- JavaScript to fetch the images and create the slideshow -->
+  <script src="https://apis.google.com/js/api.js"></script>
   <script>
-  // URL to the folder containing the images
-  var folder = "https://drive.google.com/drive/folders/1FqSprPkjVLOv8rv_i1cfZ951DFwjWMim?usp=share_link";
+    // Array of file IDs of the images in Google Drive
+    var fileIds = [
+      "YOUR_FILE_ID_1",
+      "YOUR_FILE_ID_2",
+      "YOUR_FILE_ID_3",
+      // Add more file IDs as needed
+    ];
 
-  // Array of image files in the folder
-  var images = [
-    "image1.jpg",
-    "image2.jpg",
-    "image3.jpg",
-    // Add more images here as needed
-  ];
+    // Get the container for the slideshow
+    var slideshow = document.getElementById("slideshow");
 
-  // Get the container for the slideshow
-  var slideshow = document.getElementById("slideshow");
+    // Load the Google Drive API
+    gapi.load("client", function() {
+      gapi.client.load("drive", "v3", function() {
+        // Loop through the file IDs
+        for (var i = 0; i < fileIds.length; i++) {
+          // Get the URL of the image
+          gapi.client.drive.files.get({
+            fileId: fileIds[i],
+            alt: "media"
+          }).then(function(response) {
+            // Create an image element
+            var img = document.createElement("img");
+            img.src = response.result.url;
+            slideshow.appendChild(img);
+          });
+        }
+      });
+    });
 
-  // Create an image element for each file
-  for (var i = 0; i < images.length; i++) {
-    var img = document.createElement("img");
-    img.src = folder + images[i];
-    slideshow.appendChild(img);
-  }
-
-  // Start the slideshow
-  var index = 0;
-  setInterval(function() {
-    slideshow.children[index].style.opacity = 0;
-    index = (index + 1) % images.length;
-    slideshow.children[index].style.opacity = 1;
-  }, 3000); // Change the interval time as needed (in milliseconds)
-</script>
-</body>
-</html>
+    // Start the slideshow
+    var index = 0;
+    setInterval(function() {
+      slideshow.children[index].style.opacity = 0;
+      index = (index + 1) % fileIds.length;
+      slideshow.children[index].style.op
