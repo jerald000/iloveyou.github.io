@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Happy Valentine's Day</title>
+  <style>
+    body {
+      background-color: pink;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      font-size: 72px;
+      color: red;
+    }
+
+     /* Center the slideshow on the page */
+  #slideshow {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: 50px auto;
+  }
+
+  /* Hide all images by default */
+  #slideshow img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    transition: opacity 1s;
+  }
+
+  /* Show the first image */
+  #slideshow img:first-child {
+    opacity: 1;
+  }
+
+    .heart {
+      font-size: 32px;
+      color: red;
+      font-family: 'Segoe UI Emoji', 'Segoe UI Symbol';
+    }
+
+    p{
+      font-size: 32px;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>Happy Valentine's Day!</h1>
+   <p>I love you <span class="heart">&#x2764</span></p>
+
+   <!-- Create a container for the slideshow -->
+  <div id="slideshow">
+    <!-- Insert the images here -->
+  </div>
+  
+  <!-- JavaScript to fetch the images and create the slideshow -->
+  <script>
+  // URL to the folder containing the images
+  var folder = "./photos/";
+
+  // Array of image files in the folder
+  var images = [
+    "image1.jpg",
+    "image2.jpg",
+    "image3.jpg",
+    // Add more images here as needed
+  ];
+
+  // Get the container for the slideshow
+  var slideshow = document.getElementById("slideshow");
+
+  // Create an image element for each file
+  for (var i = 0; i < images.length; i++) {
+    var img = document.createElement("img");
+    img.src = folder + images[i];
+    slideshow.appendChild(img);
+  }
+
+  // Start the slideshow
+  var index = 0;
+  setInterval(function() {
+    slideshow.children[index].style.opacity = 0;
+    index = (index + 1) % images.length;
+    slideshow.children[index].style.opacity = 1;
+  }, 3000); // Change the interval time as needed (in milliseconds)
+</script>
+</body>
+</html>
